@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EntaideÉtu – Entraide Étudiants Nouvelle-Calédonie</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style-index.css">
+
+</head>
+<body>
+
+<!-- NAV -->
+<div id="navbar-include"></div>
+<script>
+fetch('../navbar/navbar/navbar-index.html')
+  .then(r => r.text())
+  .then(html => { document.getElementById('navbar-include').innerHTML = html; });
+</script>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="fish fish-1">🐠</div>
+  <div class="fish fish-2">🐡</div>
+  <div class="fish fish-3">🐟</div>
+
+  <div class="hero-badge">🌺 Nouvelle-Calédonie · Communauté Étudiante</div>
+  <h1>
+    L'entraide,<br>
+    <span class="line-lagoon">c'est notre</span><br>
+    <span class="line-coral">lagon.</span>
+  </h1>
+  <p class="hero-sub">La plateforme des étudiants calédoniens — auto-écoles, forum de discussion, et trajets partagés entre élèves.</p>
+  <div class="hero-buttons">
+    <a href="autoecoles-noumea.html" class="btn-hero-primary">🚗 Trouver une auto-école</a>
+    <a href="#forum" class="btn-hero-outline">💬 Rejoindre le forum</a>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-dot"></div>
+    Découvrir
+  </div>
+
+  <svg class="hero-wave" viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="#054a5e"/>
+  </svg>
+</section>
+
+<!-- STATS -->
+<div class="stats-band">
+  <div class="stat-item">
+    <div class="stat-num">18</div>
+    <div class="stat-label">Auto-écoles</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Communes</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">Forum</div>
+    <div class="stat-label">Ouvert à tous</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Gratuit</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section services section-center">
+  <div class="max-wrap">
+    <span class="section-tag">🌴 Ce qu'on propose</span>
+    <h2 class="section-title">Tout ce dont tu as <em>besoin</em></h2>
+    <p class="section-sub">EntaideÉtu centralise les ressources utiles pour les étudiants de Nouvelle-Calédonie.</p>
+
+    <div class="services-grid">
+      <a href="autoecoles-noumea.html" class="service-card" style="--card-color: #07b4c8">
+        <span class="service-count">18 établissements</span>
+        <span class="service-icon">🚗</span>
+        <h3>Auto-Écoles</h3>
+        <p>Toutes les auto-écoles de Nouméa, Dumbéa, Paita, Mont-Dore et Koné avec notes, horaires et contacts.</p>
+        <span class="service-link">Voir l'annuaire</span>
+      </a>
+
+      <a href="#forum" class="service-card" style="--card-color: #f0603a">
+        <span class="service-count">Forum ouvert</span>
+        <span class="service-icon">💬</span>
+        <h3>Forum Étudiant</h3>
+        <p>Pose tes questions, partage tes expériences, débats sur le permis, les études, la vie étudiante.</p>
+        <span class="service-link">Accéder au forum</span>
+      </a>
+
+      <a href="#trajets" class="service-card" style="--card-color: #2d6a4f">
+        <span class="service-count">Trajets partagés</span>
+        <span class="service-icon">🛻</span>
+        <h3>Trajets Étudiants</h3>
+        <p>Propose ou trouve un trajet partagé entre étudiants pour aller à l'auto-école ou en cours. Simple et gratuit.</p>
+        <span class="service-link">Voir les trajets</span>
+      </a>
+
+      <a href="#" class="service-card" style="--card-color: #f9c846">
+        <span class="service-count">Bientôt</span>
+        <span class="service-icon">📚</span>
+        <h3>Ressources Code</h3>
+        <p>Fiches de révision, quiz et astuces partagés par la communauté pour réussir ton code du premier coup.</p>
+        <span class="service-link" style="color:#f9c846;filter:brightness(.8)">Prochainement</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE DIVIDER -->
+<svg class="wave-divider" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:var(--sand)">
+  <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,15 1440,30 L1440,60 L0,60 Z" fill="#2d6a4f" opacity=".9"/>
+</svg>
+
+<!-- TRAJETS PARTAGÉS -->
+<section class="trajets-band" id="trajets">
+  <div class="trajets-inner max-wrap">
+    <div class="trajets-text">
+      <span class="section-tag">🛻 Entre élèves</span>
+      <h2 class="section-title" style="font-size:2rem">Trajets<br><em style="color:#7ecba1">partagés</em></h2>
+      <p class="section-sub" style="max-width:none">Tu habites loin de ton auto-école ? Propose ton trajet ou trouve un camarade qui passe près de chez toi. Pratique, écolo, et l'occasion de faire connaissance !</p>
+      <button class="btn-trajets" onclick="document.getElementById('trajet-modal').classList.add('open')">
+        ➕ Proposer mon trajet
+      </button>
+    </div>
+    <div class="trajets-cards" id="trajet-list">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- WAVE DIVIDER -->
+<svg class="wave-divider" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:var(--mist)">
+  <path d="M0,0 C360,60 1080,0 1440,30 L1440,0 Z" fill="#2d6a4f" opacity=".9"/>
+</svg>
+
+<!-- FORUM -->
+<section class="section forum-section" id="forum">
+  <div class="section-center">
+    <span class="section-tag">💬 La communauté parle</span>
+    <h2 class="section-title">Forum <em>Étudiant</em></h2>
+    <p class="section-sub">Pose tes questions, partage tes bons plans, et rejoins la conversation.</p>
+  </div>
+
+  <div class="forum-wrap">
+    <!-- Tabs -->
+    <div class="forum-tabs" id="forum-tabs">
+      <button class="forum-tab active" onclick="filterForum('tous', this)">🌊 Tous</button>
+      <button class="forum-tab" onclick="filterForum('permis', this)">🚗 Permis</button>
+      <button class="forum-tab" onclick="filterForum('avis', this)">⭐ Avis auto-écoles</button>
+      <button class="forum-tab" onclick="filterForum('astuces', this)">💡 Astuces</button>
+      <button class="forum-tab" onclick="filterForum('vie', this)">🌺 Vie étudiante</button>
+    </div>
+
+    <!-- Compose -->
+    <div class="forum-compose">
+      <div class="compose-top">
+        <div class="compose-avatar" id="compose-av">?</div>
+        <div class="compose-fields">
+          <input type="text" id="compose-name" placeholder="Ton prénom (ou pseudo)…" maxlength="24">
+          <input type="text" id="compose-title" placeholder="Titre de ton sujet…" maxlength="80">
+          <textarea id="compose-body" placeholder="Écris ton message…" maxlength="800"></textarea>
+          <div class="compose-row">
+            <span class="compose-cat">
+              Catégorie :
+              <select id="compose-cat" style="border:none;background:transparent;color:var(--ocean);font-weight:600;font-family:inherit;cursor:pointer;outline:none">
+                <option value="permis">🚗 Permis</option>
+                <option value="avis">⭐ Avis auto-écoles</option>
+                <option value="astuces">💡 Astuces</option>
+                <option value="vie">🌺 Vie étudiante</option>
+              </select>
+            </span>
+            <button class="btn-post" onclick="postTopic()">Publier →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thread list -->
+    <div class="thread-list" id="thread-list"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-emojis">🌺 🌊 🐠 🌴 🐚</div>
+  <span class="section-tag" style="color:var(--lagoon)">Rejoins la communauté</span>
+  <h2 class="section-title">Ensemble, on va<br><em style="color:var(--sun)">plus loin.</em></h2>
+  <p class="section-sub">EntaideÉtu, c'est pour tous les étudiants du Caillou. Partage, échange, progresse.</p>
+  <a href="#forum" class="btn-cta-main">Commencer maintenant 🚀</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo">Entaide<em>Étu</em></a>
+      <p>La plateforme d'entraide des étudiants de Nouvelle-Calédonie 🌺</p>
+    </div>
+    <div class="footer-col">
+      <h4>Ressources</h4>
+      <a href="autoecoles-noumea.html">Auto-Écoles</a>
+      <a href="#forum">Forum</a>
+      <a href="#trajets">Trajets partagés</a>
+      <a href="#">Révisions Code</a>
+    </div>
+    <div class="footer-col">
+      <h4>Communes</h4>
+      <a href="autoecoles-noumea.html">Nouméa</a>
+      <a href="autoecoles-noumea.html">Dumbéa</a>
+      <a href="autoecoles-noumea.html">Paita</a>
+      <a href="autoecoles-noumea.html">Mont-Dore</a>
+      <a href="autoecoles-noumea.html">Koné</a>
+    </div>
+    <div class="footer-col">
+      <h4>Infos</h4>
+      <a href="#">À propos</a>
+      <a href="#">Contact</a>
+      <a href="#">Signaler une erreur</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 EntaideÉtu · Nouvelle-Calédonie</p>
+    <p>Fait avec <span class="footer-heart">♥</span> pour les étudiants du Caillou</p>
+  </div>
+</footer>
+
+<!-- TRAJET MODAL -->
+<div class="modal-overlay" id="trajet-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>🛻 Proposer un trajet</h3>
+      <button class="modal-close" onclick="document.getElementById('trajet-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="compose-fields">
+        <input type="text" id="t-name" placeholder="Ton prénom…" maxlength="24">
+        <input type="text" id="t-from" placeholder="Point de départ (ex: Dumbéa centre)…" maxlength="50">
+        <input type="text" id="t-to"   placeholder="Destination (ex: Green Valley Auteuil)…" maxlength="50">
+        <input type="text" id="t-time" placeholder="Horaire (ex: Lun-Ven 8h)…" maxlength="40">
+        <input type="text" id="t-contact" placeholder="Comment te contacter (insta, numéro…)…" maxlength="60">
+        <div class="compose-row" style="margin-top:.6rem">
+          <button class="btn-post" onclick="addTrajet()">Publier le trajet →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THREAD MODAL -->
+<div class="modal-overlay" id="thread-modal" onclick="if(event.target===this)closeThread()">
+  <div class="modal" id="thread-modal-inner">
+    <div class="modal-head">
+      <h3 id="thread-modal-title">Titre</h3>
+      <button class="modal-close" onclick="closeThread()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-post" id="thread-modal-body"></p>
+      <div class="modal-replies" id="thread-modal-replies"></div>
+      <div class="reply-compose" style="margin-top:1.2rem">
+        <textarea id="reply-input" placeholder="Ta réponse…" maxlength="600"></textarea>
+        <button class="btn-reply" onclick="addReply()">Répondre</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ───────── COULEURS CATÉGORIES ───────── */
+const CAT = {
+  permis:   { label:'🚗 Permis',          bg:'rgba(7,180,200,.12)',  color:'#057a8c' },
+  avis:     { label:'⭐ Avis auto-école',  bg:'rgba(249,200,70,.15)', color:'#8b6800' },
+  astuces:  { label:'💡 Astuces',          bg:'rgba(45,106,79,.12)',  color:'#1d5c3a' },
+  vie:      { label:'🌺 Vie étudiante',    bg:'rgba(240,96,58,.1)',   color:'#b33a1a' },
+};
+const AV_COLORS = ['#07b4c8','#f0603a','#2d6a4f','#f9c846','#9b59b6','#e67e22'];
+function avColor(name) { let h=0; for(let c of name)h+=c.charCodeAt(0); return AV_COLORS[h%AV_COLORS.length]; }
+function initials(n) { return n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)||'?'; }
+function timeAgo(ts) {
+  const d = Date.now()-ts, m=60000, h=3600000, j=86400000;
+  if(d<m)   return 'à l\'instant';
+  if(d<h)   return Math.floor(d/m)+'min';
+  if(d<j)   return Math.floor(d/h)+'h';
+  return Math.floor(d/j)+'j';
+}
+
+/* ───────── THREADS DATA ───────── */
+let threads = [
+  { id:1, name:'Manaia T.', title:'Green Valley vs Pilotes du Caillou à Paita ?', body:'Salut tout le monde ! J\'hésite entre ces deux écoles, les deux ont des super avis. Est-ce que quelqu\'un a fait sa formation dans les deux et peut comparer ? Je cherche surtout quelqu\'un de patient pour les manœuvres 😅', cat:'avis', ts:Date.now()-7200000, replies:[
+    { name:'Kevin M.', text:'J\'ai fait ma formation à Green Valley, franchement top. Bruno est super patient, j\'ai eu mon permis du premier coup. Tarifs un peu élevés mais ça vaut le coup.', ts:Date.now()-5400000 },
+    { name:'Chloé P.', text:'Les Pilotes du Caillou à Paita c\'est vraiment bien aussi, Virginie est une instructrice en or ! Et le secrétariat est très réactif.', ts:Date.now()-3600000 },
+  ]},
+  { id:2, name:'Théo B.', title:'Combien d\'heures de conduite en moyenne avant l\'exam ?', body:'J\'ai passé le code il y a 2 semaines, je commence la conduite bientôt. Vous avez fait combien d\'heures avant de vous présenter à l\'examen ? Et c\'est quoi les manœuvres obligatoires en NC ?', cat:'permis', ts:Date.now()-18000000, replies:[
+    { name:'Aiyana K.', text:'Moi j\'en ai fait 25h, c\'est le forfait de base dans mon école. Mais mon instructeur m\'a dit que certains ont besoin de 30-35h. Ça dépend vraiment de toi !', ts:Date.now()-14400000 },
+  ]},
+  { id:3, name:'Sina V.', title:'Astuces pour réviser le code efficacement ?', body:'Je galère sur les panneaux de signalisation et les priorités. Vous utilisez quoi comme appli ou site pour réviser ? Il y a des questions spécifiques Nouvelle-Calédonie ou c\'est le même code qu\'en métropole ?', cat:'astuces', ts:Date.now()-86400000, replies:[
+    { name:'Tom D.', text:'Le code est quasiment identique à la métropole. J\'utilisais l\'appli "En Voiture Simone" et je révisais 20min par jour. En 3 semaines j\'étais prêt.', ts:Date.now()-72000000 },
+    { name:'Leila O.', text:'Pacifikonduite a des ordinateurs sur place pour réviser, et leur moniteur fait des sessions de code en groupe le samedi matin. Super utile !', ts:Date.now()-50000000 },
+  ]},
+  { id:4, name:'Raina P.', title:'Bonne ambiance dans vos autos-écoles ? 🌺', body:'Je cherche une école sympa où l\'ambiance est détendue, pas juste axée sur le fric. Quelqu\'un a une expérience positive à partager ? Je suis à Dumbéa.', cat:'vie', ts:Date.now()-172800000, replies:[] },
+  { id:5, name:'Jordan K.', title:'Tips pour pas rater son examen au premier essai 🚗', body:'Mon examen est dans 3 semaines. Des astuces de dernière minute ? Est-ce qu\'il vaut mieux faire une leçon de conduite la veille ou se reposer ?', cat:'astuces', ts:Date.now()-259200000, replies:[
+    { name:'Noni H.', text:'Dors bien la veille, c\'est le plus important. Fais une leçon 2-3 jours avant pour te rassurer mais pas la veille pour ne pas être stressé.', ts:Date.now()-240000000 },
+  ]},
+];
+let currentFilter = 'tous';
+let openThreadId = null;
+
+/* ───────── RENDER THREADS ───────── */
+function renderThreads() {
+  const list = document.getElementById('thread-list');
+  list.innerHTML = '';
+  let filtered = currentFilter === 'tous' ? threads : threads.filter(t => t.cat === currentFilter);
+  if (!filtered.length) {
+    list.innerHTML = '<p style="text-align:center;color:var(--soft);padding:2rem">Aucun sujet dans cette catégorie. Sois le premier à écrire !</p>';
+    return;
+  }
+  filtered.slice().reverse().forEach((t, i) => {
+    const c = CAT[t.cat];
+    const isNew = Date.now() - t.ts < 3600000;
+    const div = document.createElement('div');
+    div.className = 'thread';
+    div.style.animationDelay = (i * 0.06) + 's';
+    div.innerHTML = `
+      <div class="thread-head">
+        <div class="thread-av" style="background:${avColor(t.name)}">${initials(t.name)}</div>
+        <div class="thread-meta">
+          <div class="thread-title">${t.title} ${isNew ? '<span class="thread-new">Nouveau</span>' : ''}</div>
+          <div class="thread-excerpt">${t.body}</div>
+        </div>
+      </div>
+      <div class="thread-foot">
+        <span class="thread-cat" style="background:${c.bg};color:${c.color}">${c.label}</span>
+        <span class="thread-author">par ${t.name} · ${timeAgo(t.ts)}</span>
+        <div class="thread-stats">
+          <span class="thread-stat">💬 ${t.replies.length}</span>
+          <span class="thread-stat">👁 ${Math.floor(Math.random()*80)+12}</span>
+        </div>
+      </div>`;
+    div.onclick = () => openThread(t.id);
+    list.appendChild(div);
+  });
+}
+
+function filterForum(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.forum-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderThreads();
+}
+
+/* ───────── POST TOPIC ───────── */
+function postTopic() {
+  const name  = document.getElementById('compose-name').value.trim();
+  const title = document.getElementById('compose-title').value.trim();
+  const body  = document.getElementById('compose-body').value.trim();
+  const cat   = document.getElementById('compose-cat').value;
+  if (!name || !title || !body) { alert('Remplis tous les champs 😊'); return; }
+  threads.push({ id: Date.now(), name, title, body, cat, ts: Date.now(), replies: [] });
+  document.getElementById('compose-name').value = '';
+  document.getElementById('compose-title').value = '';
+  document.getElementById('compose-body').value = '';
+  currentFilter = 'tous';
+  document.querySelectorAll('.forum-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+  renderThreads();
+}
+
+// Live avatar preview
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('compose-name').addEventListener('input', function() {
+    const av = document.getElementById('compose-av');
+    av.textContent = initials(this.value) || '?';
+    av.style.background = this.value ? avColor(this.value) : 'linear-gradient(135deg, var(--lagoon), var(--ocean))';
+  });
+  renderThreads();
+  renderTrajets();
+});
+
+/* ───────── OPEN / CLOSE THREAD MODAL ───────── */
+function openThread(id) {
+  openThreadId = id;
+  const t = threads.find(x => x.id === id);
+  if (!t) return;
+  document.getElementById('thread-modal-title').textContent = t.title;
+  document.getElementById('thread-modal-body').textContent = t.body;
+  renderReplies(t);
+  document.getElementById('thread-modal').classList.add('open');
+  document.getElementById('reply-input').value = '';
+}
+function closeThread() {
+  document.getElementById('thread-modal').classList.remove('open');
+  openThreadId = null;
+}
+function renderReplies(t) {
+  const c = document.getElementById('thread-modal-replies');
+  if (!t.replies.length) { c.innerHTML = '<p style="color:var(--soft);font-size:.85rem">Aucune réponse pour l\'instant. Sois le premier ! 🌊</p>'; return; }
+  c.innerHTML = t.replies.map(r => `
+    <div class="reply">
+      <div class="reply-head">
+        <div class="reply-av" style="background:${avColor(r.name)}">${initials(r.name)}</div>
+        <span class="reply-name">${r.name}</span>
+        <span class="reply-time">${timeAgo(r.ts)}</span>
+      </div>
+      <p class="reply-text">${r.text}</p>
+    </div>`).join('');
+}
+function addReply() {
+  const t = threads.find(x => x.id === openThreadId);
+  const text = document.getElementById('reply-input').value.trim();
+  if (!t || !text) return;
+  const name = prompt('Ton prénom ou pseudo ?', '') || 'Anonyme';
+  t.replies.push({ name, text, ts: Date.now() });
+  renderReplies(t);
+  renderThreads();
+  document.getElementById('reply-input').value = '';
+}
+
+/* ───────── TRAJETS ───────── */
+let trajets = [
+  { name:'Kimi T.', from:'Dumbéa Nord', to:'Green Valley (Auteuil)', time:'Lun–Ven 8h00', contact:'@kimi.nc', emoji:'🚙' },
+  { name:'Hina B.', from:'Paita centre', to:'Pilotes du Caillou (Paita)', time:'Mar/Jeu 9h', contact:'@hina_b', emoji:'🛻' },
+  { name:'Lukas V.', from:'Rivière Salée', to:'Pacifikonduite (Cap Normandie)', time:'Mer 14h', contact:'@lukas', emoji:'🚗' },
+];
+function renderTrajets() {
+  const el = document.getElementById('trajet-list');
+  el.innerHTML = trajets.map(t => `
+    <div class="trajet-item">
+      <div class="trajet-avatar">${t.emoji}</div>
+      <div class="trajet-info">
+        <div class="trajet-route">${t.from} → ${t.to}</div>
+        <div class="trajet-meta">${t.name} · ${t.contact} · ${t.time}</div>
+      </div>
+      <span class="trajet-badge">Dispo</span>
+    </div>`).join('');
+}
+function addTrajet() {
+  const name = document.getElementById('t-name').value.trim();
+  const from = document.getElementById('t-from').value.trim();
+  const to   = document.getElementById('t-to').value.trim();
+  const time = document.getElementById('t-time').value.trim();
+  const contact = document.getElementById('t-contact').value.trim();
+  if (!name || !from || !to) { alert('Remplis les champs obligatoires 😊'); return; }
+  trajets.unshift({ name, from, to, time: time||'À définir', contact: contact||'—', emoji:'🚗' });
+  renderTrajets();
+  document.getElementById('trajet-modal').classList.remove('open');
+  ['t-name','t-from','t-to','t-time','t-contact'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('trajets').scrollIntoView({behavior:'smooth', block:'center'});
+}
+</script>
+</body>
+</html>

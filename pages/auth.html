@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion / Inscription – EntaideÉtu</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style-auth.css">
+
+
+</style>
+</head>
+<body>
+
+<div class="auth-layout">
+
+  <!-- ── PANNEAU GAUCHE ─────────────────────────── -->
+  <div class="panel-left">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="fish">🐠</div>
+    <div class="fish">🐡</div>
+
+    <!-- SVG décoratif corail -->
+    <svg class="deco-coral" width="320" height="400" viewBox="0 0 320 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M160 380 Q140 300 120 250 Q100 200 80 180 Q60 160 80 140 Q100 120 120 150 Q140 180 160 160 Q180 140 200 150 Q220 160 240 140 Q260 120 240 180 Q220 200 200 250 Q180 300 160 380Z" fill="white"/>
+      <path d="M80 380 Q70 320 60 280 Q50 240 40 220 Q30 200 45 185 Q60 170 75 195 Q90 220 80 380Z" fill="white"/>
+      <path d="M240 380 Q250 320 260 280 Q270 240 280 220 Q290 200 275 185 Q260 170 245 195 Q230 220 240 380Z" fill="white"/>
+    </svg>
+
+    <a href="index.html" class="left-logo">Entaide<em>Étu</em></a>
+
+    <h1 class="left-headline">
+      Rejoins<br>
+      la <em>communauté</em><br>
+      <span class="coral">du Caillou.</span>
+    </h1>
+    <p class="left-sub">Crée ton profil étudiant et accède à tous les services EntaideÉtu en Nouvelle-Calédonie.</p>
+
+    <div class="feat-list">
+      <div class="feat-item">
+        <div class="feat-icon">🚗</div>
+        <div class="feat-text"><strong>18 auto-écoles</strong> avec avis et horaires</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">💬</div>
+        <div class="feat-text"><strong>Forum étudiant</strong> pour débattre et poser tes questions</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">🛻</div>
+        <div class="feat-text"><strong>Trajets partagés</strong> entre élèves</div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">📚</div>
+        <div class="feat-text"><strong>Ressources code</strong> pour réviser efficacement</div>
+      </div>
+    </div>
+
+    <!-- Témoignage -->
+    <div class="left-testimonial">
+      <p class="testi-text">"Grâce au forum j'ai trouvé la bonne auto-école à Paita et un trajet partagé depuis Dumbéa. Super initiative !"</p>
+      <div class="testi-author">
+        <div class="testi-av">KT</div>
+        <span class="testi-name">Kimi T. · Étudiante, Dumbéa</span>
+        <span class="testi-stars">★★★★★</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PANNEAU DROIT ───────────────────────────── -->
+  <div class="panel-right">
+
+    <a href="index.html" class="back-link">
+      ← Retour à l'accueil
+    </a>
+
+    <div class="form-wrap">
+
+      <!-- Toggle -->
+      <div class="form-toggle">
+        <button class="toggle-btn active" id="btn-login"  onclick="showPanel('login')">Se connecter</button>
+        <button class="toggle-btn"        id="btn-register" onclick="showPanel('register')">S'inscrire</button>
+      </div>
+
+      <!-- ══ FORMULAIRE CONNEXION ══ -->
+      <div class="form-panel active" id="panel-login">
+        <h2 class="form-title">Bon retour <em>sur le Caillou</em> 🌊</h2>
+        <p class="form-sub">Connecte-toi à ton espace étudiant.</p>
+
+        <div class="alert-box" id="login-alert">
+          <span>⚠️</span>
+          <p id="login-alert-msg">Email ou mot de passe incorrect.</p>
+        </div>
+        <div class="success-box" id="login-success">
+          <span>✅</span>
+          <p>Connexion réussie ! Redirection en cours…</p>
+        </div>
+
+        <div class="field-group">
+          <div class="field">
+            <label for="login-email">Adresse email</label>
+            <div class="field-input-wrap">
+              <span class="field-icon">✉️</span>
+              <input type="email" id="login-email" placeholder="ton.email@exemple.nc" autocomplete="email">
+            </div>
+            <span class="field-error" id="login-email-err">⚠ Adresse email invalide.</span>
+          </div>
+
+          <div class="field">
+            <label for="login-pw">Mot de passe</label>
+            <div class="field-input-wrap">
+              <span class="field-icon">🔒</span>
+              <input type="password" id="login-pw" placeholder="••••••••" autocomplete="current-password">
+              <button class="pw-toggle" type="button" onclick="togglePw('login-pw', this)" title="Afficher/masquer">👁</button>
+            </div>
+            <span class="field-error" id="login-pw-err">⚠ Mot de passe requis.</span>
+          </div>
+
+          <div class="forgot-link"><a href="#" onclick="showForgot(); return false">Mot de passe oublié ?</a></div>
+
+          <button class="btn-submit" id="btn-login-submit" onclick="handleLogin()">
+            <span class="btn-label">Se connecter →</span>
+            <span class="spinner"></span>
+          </button>
+        </div>
+
+        <div class="divider">ou</div>
+
+        <div class="switch-link">Pas encore de compte ? <a href="#" onclick="showPanel('register'); return false">S'inscrire gratuitement</a></div>
+      </div>
+
+      <!-- ══ FORMULAIRE INSCRIPTION ══ -->
+      <div class="form-panel" id="panel-register">
+
+        <!-- Vue formulaire -->
+        <div id="register-form-view">
+          <h2 class="form-title">Crée ton <em>espace</em> 🌺</h2>
+          <p class="form-sub">Inscription gratuite, réservée aux étudiants de Nouvelle-Calédonie.</p>
+
+          <div class="alert-box" id="reg-alert">
+            <span>⚠️</span>
+            <p id="reg-alert-msg">Cet email est déjà utilisé.</p>
+          </div>
+
+          <div class="field-group">
+            <!-- Prénom / Nom -->
+            <div class="field-row">
+              <div class="field">
+                <label for="reg-prenom">Prénom</label>
+                <div class="field-input-wrap">
+                  <span class="field-icon">👤</span>
+                  <input type="text" id="reg-prenom" placeholder="Kimi" maxlength="30" autocomplete="given-name">
+                </div>
+                <span class="field-error" id="reg-prenom-err">⚠ Requis.</span>
+              </div>
+              <div class="field">
+                <label for="reg-nom">Nom</label>
+                <div class="field-input-wrap">
+                  <span class="field-icon">👤</span>
+                  <input type="text" id="reg-nom" placeholder="Tiavéa" maxlength="40" autocomplete="family-name">
+                </div>
+                <span class="field-error" id="reg-nom-err">⚠ Requis.</span>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="field">
+              <label for="reg-email">Adresse email</label>
+              <div class="field-input-wrap">
+                <span class="field-icon">✉️</span>
+                <input type="email" id="reg-email" placeholder="ton.email@exemple.nc" autocomplete="email">
+              </div>
+              <span class="field-error" id="reg-email-err">⚠ Email invalide.</span>
+            </div>
+
+            <!-- Commune -->
+            <div class="field">
+              <label>Ta commune</label>
+              <div class="commune-badges" id="commune-group">
+                <button class="commune-badge" onclick="selectCommune(this,'Nouméa')">📍 Nouméa</button>
+                <button class="commune-badge" onclick="selectCommune(this,'Dumbéa')">📍 Dumbéa</button>
+                <button class="commune-badge" onclick="selectCommune(this,'Paita')">📍 Paita</button>
+                <button class="commune-badge" onclick="selectCommune(this,'Mont-Dore')">📍 Mont-Dore</button>
+                <button class="commune-badge" onclick="selectCommune(this,'Koné')">📍 Koné</button>
+                <button class="commune-badge" onclick="selectCommune(this,'Autre')">📍 Autre</button>
+              </div>
+              <span class="field-error" id="reg-commune-err">⚠ Sélectionne ta commune.</span>
+            </div>
+
+            <!-- Mot de passe -->
+            <div class="field">
+              <label for="reg-pw">Mot de passe</label>
+              <div class="field-input-wrap">
+                <span class="field-icon">🔒</span>
+                <input type="password" id="reg-pw" placeholder="Au moins 8 caractères" autocomplete="new-password" oninput="checkStrength(this.value)">
+                <button class="pw-toggle" type="button" onclick="togglePw('reg-pw', this)" title="Afficher/masquer">👁</button>
+              </div>
+              <div class="pw-strength">
+                <div class="pw-strength-bar"><div class="pw-strength-fill" id="strength-fill"></div></div>
+                <div class="pw-strength-label" id="strength-label"></div>
+              </div>
+              <span class="field-error" id="reg-pw-err">⚠ Minimum 8 caractères.</span>
+            </div>
+
+            <!-- Confirmer mot de passe -->
+            <div class="field">
+              <label for="reg-pw2">Confirmer le mot de passe</label>
+              <div class="field-input-wrap">
+                <span class="field-icon">🔒</span>
+                <input type="password" id="reg-pw2" placeholder="••••••••" autocomplete="new-password">
+                <button class="pw-toggle" type="button" onclick="togglePw('reg-pw2', this)" title="Afficher/masquer">👁</button>
+              </div>
+              <span class="field-error" id="reg-pw2-err">⚠ Les mots de passe ne correspondent pas.</span>
+            </div>
+
+            <!-- CGU -->
+            <div class="field">
+              <label class="field-check">
+                <input type="checkbox" id="reg-cgu">
+                <span>J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de confidentialité</a> d'EntaideÉtu.</span>
+              </label>
+              <span class="field-error" id="reg-cgu-err">⚠ Tu dois accepter les conditions.</span>
+            </div>
+
+            <button class="btn-submit" id="btn-reg-submit" onclick="handleRegister()">
+              <span class="btn-label">Créer mon compte 🌺</span>
+              <span class="spinner"></span>
+            </button>
+          </div>
+
+          <div class="divider">ou</div>
+          <div class="switch-link">Déjà inscrit ? <a href="#" onclick="showPanel('login'); return false">Se connecter</a></div>
+        </div>
+
+        <!-- Vue succès inscription -->
+        <div class="success-screen" id="reg-success-screen">
+          <div class="success-avatar" id="success-av">K</div>
+          <h2>Bienvenue <span id="success-name">Kimi</span> ! 🎉</h2>
+          <p>Ton compte a été créé avec succès.<br>Tu fais maintenant partie de la communauté EntaideÉtu en <strong id="success-commune">Nouvelle-Calédonie</strong> !</p>
+          <a href="index.html" class="btn-go">Accéder à la plateforme →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL MOT DE PASSE OUBLIÉ -->
+<div id="forgot-overlay" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(6,28,38,.65);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem">
+  <div style="background:#fff;border-radius:20px;max-width:380px;width:100%;padding:2rem;box-shadow:0 24px 60px rgba(0,0,0,.2);animation:fadeIn .25s ease">
+    <h3 style="font-family:'Fraunces',serif;font-size:1.25rem;font-weight:900;color:var(--text);margin-bottom:.5rem">Mot de passe oublié 🔑</h3>
+    <p style="font-size:.85rem;color:var(--soft);margin-bottom:1.2rem;line-height:1.6">Saisis ton adresse email, on t'envoie un lien de réinitialisation.</p>
+    <div class="field" style="margin-bottom:1rem">
+      <div class="field-input-wrap">
+        <span class="field-icon">✉️</span>
+        <input type="email" id="forgot-email" placeholder="ton.email@exemple.nc" style="padding:.75rem .85rem .75rem 2.6rem;border:1.5px solid rgba(10,126,164,.18);border-radius:11px;width:100%;font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;outline:none">
+      </div>
+    </div>
+    <div style="display:flex;gap:.7rem">
+      <button onclick="closeForgot()" style="flex:1;padding:.7rem;background:transparent;border:1.5px solid rgba(10,126,164,.2);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:.85rem;color:var(--soft)">Annuler</button>
+      <button onclick="sendForgot()" style="flex:1;padding:.7rem;background:var(--ocean);border:none;border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.85rem;color:#fff">Envoyer →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   CONFIG API
+══════════════════════════════════════════ */
+const API = 'http://127.0.0.1:5000';
+
+/* ─── STATE ─────────────────────────────── */
+let selectedCommune = '';
+
+/* ─── SESSION (token stocké en mémoire + sessionStorage) ────── */
+const Session = {
+  set(token, user) {
+    sessionStorage.setItem('eetu_token', token);
+    sessionStorage.setItem('eetu_user',  JSON.stringify(user));
+  },
+  getToken() { return sessionStorage.getItem('eetu_token'); },
+  getUser()  {
+    try { return JSON.parse(sessionStorage.getItem('eetu_user') || 'null'); }
+    catch(e) { return null; }
+  },
+  clear() {
+    sessionStorage.removeItem('eetu_token');
+    sessionStorage.removeItem('eetu_user');
+  },
+};
+
+/* ─── APPEL API ──────────────────────────── */
+async function apiCall(method, path, body = null, token = null) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  try {
+    const res = await fetch(`${API}${path}`, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    const data = await res.json();
+    return { ok: res.ok, status: res.status, data };
+  } catch (err) {
+    return { ok: false, status: 0, data: { error: 'Serveur injoignable. Lance bien server.py !' } };
+  }
+}
+
+/* ─── PANELS ────────────────────────────── */
+function showPanel(which) {
+  document.getElementById('panel-login').classList.toggle('active', which === 'login');
+  document.getElementById('panel-register').classList.toggle('active', which === 'register');
+  document.getElementById('btn-login').classList.toggle('active', which === 'login');
+  document.getElementById('btn-register').classList.toggle('active', which === 'register');
+  clearErrors();
+}
+
+/* ─── HELPERS UI ─────────────────────────── */
+function setErr(id, show) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('show', show);
+}
+function setInputErr(id, show) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('error', show);
+}
+function clearErrors() {
+  document.querySelectorAll('.field-error').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('input').forEach(e => e.classList.remove('error'));
+  document.querySelectorAll('.alert-box,.success-box').forEach(e => e.classList.remove('show'));
+}
+function showAlert(id, msgId, msg) {
+  if (msgId) document.getElementById(msgId).textContent = msg;
+  document.getElementById(id).classList.add('show');
+}
+function togglePw(id, btn) {
+  const inp = document.getElementById(id);
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else                         { inp.type = 'password'; btn.textContent = '👁'; }
+}
+function selectCommune(btn, name) {
+  document.querySelectorAll('.commune-badge').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedCommune = name;
+  setErr('reg-commune-err', false);
+}
+function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+/* ─── PASSWORD STRENGTH ─────────────────── */
+function checkStrength(val) {
+  const fill  = document.getElementById('strength-fill');
+  const label = document.getElementById('strength-label');
+  label.style.display = val ? 'block' : 'none';
+  let score = 0;
+  if (val.length >= 8)           score++;
+  if (/[A-Z]/.test(val))         score++;
+  if (/[0-9]/.test(val))         score++;
+  if (/[^A-Za-z0-9]/.test(val))  score++;
+  const configs = [
+    { w:'20%',  bg:'#e74c3c', text:'😬 Trop faible' },
+    { w:'45%',  bg:'#e67e22', text:'🤔 Faible' },
+    { w:'70%',  bg:'#f9c846', text:'👍 Correct' },
+    { w:'100%', bg:'#27ae60', text:'💪 Excellent !' },
+  ];
+  const c = configs[Math.min(score, 3)];
+  if (val) {
+    fill.style.width      = c.w;
+    fill.style.background = c.bg;
+    label.textContent     = c.text;
+    label.style.color     = c.bg;
+  } else {
+    fill.style.width  = '0%';
+    label.textContent = '';
+  }
+}
+
+/* ══════════════════════════════════════════
+   CONNEXION → POST /api/login
+══════════════════════════════════════════ */
+async function handleLogin() {
+  clearErrors();
+  const email = document.getElementById('login-email').value.trim();
+  const pw    = document.getElementById('login-pw').value;
+  let valid = true;
+
+  if (!isValidEmail(email)) { setErr('login-email-err', true); setInputErr('login-email', true); valid = false; }
+  if (!pw)                   { setErr('login-pw-err',    true); setInputErr('login-pw',    true); valid = false; }
+  if (!valid) return;
+
+  const btn = document.getElementById('btn-login-submit');
+  btn.classList.add('loading');
+
+  const { ok, status, data } = await apiCall('POST', '/api/login', {
+    email,
+    password: pw,
+  });
+
+  btn.classList.remove('loading');
+
+  if (!ok) {
+    const msg = status === 429
+      ? `Trop de tentatives. Réessaie dans 15 minutes.`
+      : (data.error || 'Email ou mot de passe incorrect.');
+    showAlert('login-alert', 'login-alert-msg', msg);
+    setInputErr('login-email', true);
+    setInputErr('login-pw', true);
+    return;
+  }
+
+  // Succès → stocker token et rediriger
+  Session.set(data.token, data.user);
+  document.getElementById('login-success').classList.add('show');
+  setTimeout(() => { window.location.href = 'index.html'; }, 1400);
+}
+
+/* ══════════════════════════════════════════
+   INSCRIPTION → POST /api/register
+══════════════════════════════════════════ */
+async function handleRegister() {
+  clearErrors();
+  const prenom = document.getElementById('reg-prenom').value.trim();
+  const nom    = document.getElementById('reg-nom').value.trim();
+  const email  = document.getElementById('reg-email').value.trim();
+  const pw     = document.getElementById('reg-pw').value;
+  const pw2    = document.getElementById('reg-pw2').value;
+  const cgu    = document.getElementById('reg-cgu').checked;
+  let valid = true;
+
+  if (!prenom)              { setErr('reg-prenom-err',  true); setInputErr('reg-prenom', true); valid = false; }
+  if (!nom)                 { setErr('reg-nom-err',     true); setInputErr('reg-nom',    true); valid = false; }
+  if (!isValidEmail(email)) { setErr('reg-email-err',   true); setInputErr('reg-email',  true); valid = false; }
+  if (!selectedCommune)     { setErr('reg-commune-err', true);                                  valid = false; }
+  if (pw.length < 8)        { setErr('reg-pw-err',      true); setInputErr('reg-pw',     true); valid = false; }
+  if (pw !== pw2)           { setErr('reg-pw2-err',     true); setInputErr('reg-pw2',    true); valid = false; }
+  if (!cgu)                 { setErr('reg-cgu-err',     true);                                  valid = false; }
+  if (!valid) return;
+
+  const btn = document.getElementById('btn-reg-submit');
+  btn.classList.add('loading');
+
+  const { ok, status, data } = await apiCall('POST', '/api/register', {
+    prenom,
+    nom,
+    email,
+    commune:   selectedCommune,
+    password:  pw,
+    password2: pw2,
+  });
+
+  btn.classList.remove('loading');
+
+  if (!ok) {
+    if (status === 422 && data.errors) {
+      showAlert('reg-alert', 'reg-alert-msg', data.errors[0]);
+    } else if (status === 409) {
+      showAlert('reg-alert', 'reg-alert-msg', 'Cet email est déjà associé à un compte.');
+      setInputErr('reg-email', true);
+    } else if (status === 429) {
+      showAlert('reg-alert', 'reg-alert-msg', 'Trop de tentatives. Réessaie dans 15 minutes.');
+    } else {
+      showAlert('reg-alert', 'reg-alert-msg', data.error || 'Erreur serveur.');
+    }
+    return;
+  }
+
+  // Succès → stocker token + afficher écran de bienvenue
+  Session.set(data.token, data.user);
+  const initials = (prenom[0] || '') + (nom[0] || '');
+  document.getElementById('success-av').textContent       = initials.toUpperCase();
+  document.getElementById('success-name').textContent     = prenom;
+  document.getElementById('success-commune').textContent  = selectedCommune;
+  document.getElementById('register-form-view').style.display = 'none';
+  document.getElementById('reg-success-screen').classList.add('show');
+}
+
+/* ─── MOT DE PASSE OUBLIÉ ───────────────── */
+function showForgot() {
+  document.getElementById('forgot-overlay').style.display = 'flex';
+}
+function closeForgot() {
+  document.getElementById('forgot-overlay').style.display = 'none';
+  document.getElementById('forgot-email').value = '';
+}
+function sendForgot() {
+  const email = document.getElementById('forgot-email').value.trim();
+  if (!isValidEmail(email)) { alert('Saisis une adresse email valide.'); return; }
+  closeForgot();
+  // TODO: brancher endpoint /api/forgot-password
+  alert(`✅ Si un compte existe pour "${email}", un lien de réinitialisation lui sera envoyé.`);
+}
+
+/* ─── VÉRIF SESSION AU CHARGEMENT ────────── */
+window.addEventListener('DOMContentLoaded', async () => {
+  const token = Session.getToken();
+  if (!token) return;
+  // Vérifier si le token est encore valide
+  const { ok, data } = await apiCall('GET', '/api/me', null, token);
+  if (ok && data.user) {
+    // Déjà connecté → rediriger
+    window.location.href = 'index.html';
+  } else {
+    Session.clear();
+  }
+});
+</script>
+</body>
+</html>

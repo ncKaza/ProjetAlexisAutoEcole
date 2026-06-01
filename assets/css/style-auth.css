@@ -215,7 +215,6 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: .9rem; color: var(--text);
   outline: none; transition: border-color .18s, box-shadow .18s;
-  -webkit-appearance: none;
 }
 .field input:focus, .field select:focus {
   border-color: var(--ocean);
@@ -248,6 +247,8 @@ body {
   border: 1.5px solid rgba(10,126,164,.3);
   accent-color: var(--ocean); cursor: pointer;
   flex-shrink: 0; margin-top: .1rem; padding: 0;
+  position: relative;
+  z-index: 2;
 }
 .field-check span {
   font-size: .82rem; color: var(--soft); line-height: 1.5;

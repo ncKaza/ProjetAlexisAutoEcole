@@ -96,35 +96,7 @@ fetch('../navbar/navbar/navbar-autoecoles.html')
 </footer>
 
 <script>
-  const SCHOOLS = [
-    // ── NOUMÉA ──────────────────────────────────────────────────────
-    { zone:"Nouméa", name:"Driving School Green Valley", address:"1 Rue Jean-François Cherrier, Nouméa", phone:"+687 43.24.12", rating:5.0, count:10, icon:"🌿", hours:["Lundi: 9h–12h / 13h–17h","Mardi: 9h–12h / 13h–17h","Mercredi: 9h–12h / 13h–17h","Jeudi: 9h–12h / 13h–17h","Vendredi: 9h–12h / 13h–17h","Samedi: 9h–12h","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Driving+School+Green+Valley+Noum%C3%A9a", tip:"Voiture + moto · équipe très patiente" },
-    { zone:"Nouméa", name:"Driving School Archipel", address:"23 Route de l'Anse Vata, Trianon, Nouméa", phone:"+687 31.75.15", rating:5.0, count:1, icon:"🏝️", hours:["Lundi–Jeudi: 8h–18h","Vendredi: 8h–16h","Samedi: 8h–12h","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Driving+School+Archipel+Noum%C3%A9a", tip:"Proche Anse Vata · larges horaires" },
-    { zone:"Nouméa", name:"Driving School Les Pilotes Du Caillou", address:"35 Rue Jules Garnier, Port Plaisance, Nouméa", phone:"+687 32.09.50", rating:5.0, count:4, icon:"⚓", hours:["Lundi: 13h–18h","Mardi: 9h–12h / 14h–18h","Mercredi: 9h–12h / 13h–18h","Jeudi: 9h–12h / 14h–18h","Vendredi: 9h–12h / 13h–18h","Samedi: 8h–12h","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Les+Pilotes+du+Caillou+Noum%C3%A9a", tip:"Instructeurs dédiés et professionnels" },
-    { zone:"Nouméa", name:"Pacifikonduite", address:"17 Route du S, Cap Normandie, Nouméa", phone:"+687 31.71.17", rating:5.0, count:4, icon:"🌊", hours:["Lundi: 14h30–17h30","Mardi: 14h30–17h30","Mercredi: 9h30–11h30 / 14h30–17h30","Jeudi: 14h30–17h30","Vendredi: 14h30–17h30","Samedi: 9h30–11h30","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Pacifikonduite+Noum%C3%A9a", tip:"Conduite zen · ambiance bienveillante" },
-    { zone:"Nouméa", name:"Driving School Alpha Nouméa", address:"213 Rue Auguste Benebig, Nouméa", phone:"+687 28.68.94", rating:4.9, count:7, icon:"🅰️", hours:["Lundi: 14h30–17h30","Mardi: 8h–11h / 14h30–17h30","Mercredi: 8h–11h / 14h30–17h30","Jeudi: 8h–11h / 14h30–17h30","Vendredi: 8h–11h / 14h30–17h30","Samedi: 8h–11h","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Driving+School+Alpha+Noum%C3%A9a", tip:"Très bien noté, petit effectif" },
-    { zone:"Nouméa", name:"Driving School Dynamic Nouville", address:"3 Rue du Capitaine Bois, Nouméa", phone:"+687 44.69.44", rating:4.8, count:4, icon:"⚡", hours:["Lundi: 13h–17h","Mardi–Vendredi: 9h–17h","Samedi: Fermé","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Driving+School+Dynamic+Nouville", tip:"Spécialiste moto · méthode efficace" },
-    { zone:"Nouméa", name:"Driving School Vega", address:"13 Rue Eugène Porcheron, Nouméa", phone:"+687 86.05.56", rating:4.2, count:5, icon:"⭐", hours:["Horaires à confirmer directement"], maps:"https://maps.google.com/?q=Driving+School+Vega+Noum%C3%A9a", tip:"École familiale, accueil chaleureux" },
-    { zone:"Nouméa", name:"Driving School Lagon", address:"6 Rue Febvrier Despointes, Nouméa", phone:"+687 26.19.99", rating:3.9, count:7, icon:"🐚", hours:["Lundi: 14h–18h","Mardi–Vendredi: 8h–12h / 14h–18h","Samedi: 8h–11h","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Driving+School+Lagon+Noum%C3%A9a", tip:"Demande les avis récents avant de s'inscrire" },
-    { zone:"Nouméa", name:"Chrono 64 Vallée Des Colons", address:"77 Rue Auguste Benebig, Nouméa", phone:"+687 27.50.54", rating:3.4, count:26, icon:"⏱️", hours:["Lundi: Fermé","Mardi–Vendredi: 8h–12h / 13h–18h","Samedi: 9h–12h","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Chrono+64+Vall%C3%A9e+des+Colons+Noum%C3%A9a", tip:"Grand établissement · lire les avis" },
-    { zone:"Nouméa", name:"Driving School 7", address:"4 Rue Clemen – PK7, Magenta, Nouméa", phone:"+687 41.57.30", rating:2.6, count:9, icon:"7️⃣", hours:["Lundi–Mercredi: 8h–11h / 13h30–17h30","Jeudi–Vendredi: 8h–11h / 13h–17h30","Samedi: 8h–11h","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Driving+School+7+Noum%C3%A9a", tip:"Avis très mitigés – renseigne-toi bien" },
-
-    // ── DUMBÉA ──────────────────────────────────────────────────────
-    { zone:"Dumbéa", name:"Driving School Dynamic Koutio", address:"28 Rue Theodore Monod, Dumbéa", phone:"+687 46.76.46", rating:3.5, count:6, icon:"⚡", hours:["Lundi–Jeudi: 9h–17h","Vendredi: 9h–16h","Samedi: 9h–12h","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Driving+School+Dynamic+Koutio+Dumb%C3%A9a", tip:"Simulateur de conduite disponible · branch Dynamic" },
-    { zone:"Dumbéa", name:"Chrono 64 Auteuil", address:"29 Rue RT1, Complexe le Nha Trang, Auteuil, Dumbéa", phone:"+687 43.18.04", rating:3.0, count:2, icon:"⏱️", hours:["Lundi: Fermé","Mardi–Vendredi: 8h–12h / 13h–18h","Samedi: 9h–12h","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Chrono+64+Auteuil+Dumb%C3%A9a", tip:"Lire les avis récents avant de s'inscrire" },
-
-    // ── PAITA ───────────────────────────────────────────────────────
-    { zone:"Païta", name:"Les Pilotes Du Caillou – Païta", address:"Complexe commercial de la Gare, Rte du Mont Mou, Païta", phone:"+687 31.07.70", rating:5.0, count:20, icon:"⚓", hours:["Lundi: 13h–18h","Mardi: 9h–12h / 14h–18h","Mercredi: 9h–12h / 13h–18h","Jeudi: 9h–12h / 14h–18h","Vendredi: 9h–12h / 13h–18h","Samedi: 8h–12h","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Les+Pilotes+du+Caillou+Pa%C3%AFta", tip:"Note parfaite avec 20 avis · très recommandée" },
-    { zone:"Païta", name:"Driving School Dominique", address:"Paita, Nouvelle-Calédonie", phone:"+687 35.30.90", rating:5.0, count:1, icon:"🚗", hours:["Horaires à confirmer directement"], maps:"https://maps.google.com/?q=Driving+School+Dominique+Pa%C3%AFta", tip:"Petite structure · appeler pour infos" },
-    { zone:"Païta", name:"Chrono 64 Paita", address:"163 Rue Charles Berthelin, Paita", phone:"+687 28.10.58", rating:null, count:0, icon:"⏱️", hours:["Lundi: Fermé","Mardi–Vendredi: 8h–12h / 13h–18h","Samedi: 9h–12h","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Chrono+64+Pa%C3%AFta", tip:"Pas encore d'avis disponibles" },
-
-    // ── MONT-DORE ────────────────────────────────────────────────────
-    { zone:"Mont-Dore", name:"Driving School of Boulari", address:"BP 196, Mont-Dore", phone:"+687 44.92.90", rating:5.0, count:1, icon:"⛰️", hours:["Lundi: 13h–17h30","Mardi: 8h–11h30 / 13h–17h30","Mercredi: 8h–11h30 / 13h30–17h30","Jeudi: 8h–11h30 / 13h–17h30","Vendredi: 8h–11h30 / 13h–16h30","Samedi: 8h–11h30","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Driving+School+of+Boulari+Mont-Dore", tip:"Accès internet pour réviser le code · très accueillant" },
-
-    // ── KONÉ ────────────────────────────────────────────────────────
-    { zone:"Koné", name:"Driving School VKP", address:"Zone artisanale de Baco, Impasse du Lion, Koné", phone:"+687 47.20.24", rating:5.0, count:1, icon:"🏔️", hours:["Lundi: 13h–18h","Mardi–Jeudi: 8h–12h / 13h–17h","Vendredi: 8h–12h","Samedi: Fermé","Dimanche: Fermé"], maps:"https://maps.google.com/?q=Driving+School+VKP+Kon%C3%A9", tip:"Seule auto-école recensée en Province Nord" },
-    { zone:"Koné", name:"Ouest Auto School", address:"Rue Paul Reuillard, Koné", phone:"—", rating:5.0, count:1, icon:"🌴", hours:["Horaires à confirmer directement"], maps:"https://maps.google.com/?q=Ouest+Auto+School+Kon%C3%A9", tip:"Appeler ou passer directement pour les infos" },
-  ];
+  let SCHOOLS = [];
 
   function starsHtml(r) {
     if (r === null) return '<span style="color:var(--light);font-size:.8rem">Pas encore noté</span>';
@@ -252,7 +224,23 @@ fetch('../navbar/navbar/navbar-autoecoles.html')
 
   document.getElementById('search').addEventListener('input', () => renderCards(getFiltered()));
 
-  renderCards(SCHOOLS.slice().sort((a,b) => (b.rating||0) - (a.rating||0)));
-</script>
+  fetch('../api/autoecoles.php')
+    .then(r => r.json())
+    .then(data => {
+      SCHOOLS = data.map(s => ({
+        ...s,
+        rating: s.rating === null ? null : parseFloat(s.rating),
+        count: parseInt(s.count),
+        phone: s.phone || '—',
+        icon: '🚗',
+        hours: ['Horaires à confirmer directement'],
+        maps: 'https://maps.google.com/?q=' + encodeURIComponent(s.name + ' ' + s.zone)
+      }));
+      renderCards(getFiltered());
+    })
+    .catch(() => {
+      document.getElementById('grid').innerHTML = '<p>Erreur de chargement des auto-écoles.</p>';
+    });
+    </script>
 </body>
 </html>

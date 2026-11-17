@@ -265,6 +265,7 @@ fetch('../navbar/navbar/navbar-index.html')
     </div>
     <div class="modal-body">
       <p class="modal-post" id="thread-modal-body"></p>
+            <div id="thread-actions" style="display:flex;gap:.6rem;margin-bottom:1.2rem"></div>
       <div class="modal-replies" id="thread-modal-replies"></div>
       <div class="reply-compose" style="margin-top:1.2rem">
         <textarea id="reply-input" placeholder="Ta réponse…" maxlength="600"></textarea>
@@ -415,6 +416,17 @@ function openThread(id) {
   document.getElementById('thread-modal-title').innerHTML = t.title;
   document.getElementById('thread-modal-body').innerHTML = t.body;
   renderReplies(t);
+
+  // Boutons Modifier / Supprimer : seulement pour l'auteur du sujet
+  const actions = document.getElementById('thread-actions');
+  if (utilisateurConnecte && Number(utilisateurConnecte.id) === Number(t.id_auteur)) {
+    actions.innerHTML = `
+      <button class="btn-reply" onclick="modifierSujet()">✏️ Modifier</button>
+      <button class="btn-reply" style="background:var(--coral)" onclick="supprimerSujet()">🗑️ Supprimer</button>`;
+  } else {
+    actions.innerHTML = '';
+  }
+
   document.getElementById('thread-modal').classList.add('open');
   document.getElementById('reply-input').value = '';
 }
@@ -446,6 +458,29 @@ function addReply() {
     .then(({ ok, data }) => {
       if (!ok) { alert(data.error || 'Erreur lors de l\'envoi de la réponse.'); return; }
       document.getElementById('reply-input').value = '';
+      chargerSujets();
+    });
+}
+/* ───────── MODIFIER / SUPPRIMER SON SUJET ───────── */
+function modifierSujet() {
+  const t = threads.find(x => x.id === openThreadId);
+  const nouveau = prompt('Modifier ton message :', document.getElementById('thread-modal-body').textContent);
+  if (!t || nouveau === null || nouveau.trim() === '') return;
+
+  envoyerJSON('../api/modifier_sujet.php', { id: t.id, message: nouveau.trim() })
+    .then(({ ok, data }) => {
+      if (!ok) { alert(data.error); return; }
+      chargerSujets().then(() => openThread(t.id));
+    });
+}
+
+function supprimerSujet() {
+  if (!confirm('Supprimer définitivement ce sujet et ses réponses ?')) return;
+
+  envoyerJSON('../api/supprimer_sujet.php', { id: openThreadId })
+    .then(({ ok, data }) => {
+      if (!ok) { alert(data.error); return; }
+      closeThread();
       chargerSujets();
     });
 }

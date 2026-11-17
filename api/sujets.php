@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 /* ════════ GET : lister les sujets avec leurs réponses ════════ */
 
 // 1. Les sujets + le nom de leur auteur (jointure avec utilisateur)
-$sql = "SELECT s.id, s.titre, s.message, s.categorie,
+$sql = "SELECT s.id, s.titre, s.message, s.categorie, s.id_utilisateur,
                UNIX_TIMESTAMP(s.date_creation) AS ts, u.prenom, u.nom
         FROM sujet s
         JOIN utilisateur u ON s.id_utilisateur = u.id
@@ -57,6 +57,7 @@ $sujets = [];
 while ($row = mysqli_fetch_assoc($result)) {
     $sujets[$row['id']] = [
         'id'      => (int) $row['id'],
+        'id_auteur' => (int) $row['id_utilisateur'],
         'name'    => securiser($row['prenom'] . ' ' . $row['nom']),
         'title'   => securiser($row['titre']),
         'body'    => securiser($row['message']),

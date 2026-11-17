@@ -21,12 +21,8 @@ function afficherUtilisateur() {
 
       const lien = document.getElementById('nav-auth');
       if (lien) {
-        lien.textContent = '👤 ' + data.user.prenom + ' · Déconnexion';
-        lien.href = '#';
-        lien.onclick = (e) => {
-          e.preventDefault();
-          fetch('../api/logout.php').then(() => window.location.reload());
-        };
+        lien.textContent = '👤 ' + data.user.prenom;
+        lien.href = 'profil.html';
       }
 
       if (champNom) {

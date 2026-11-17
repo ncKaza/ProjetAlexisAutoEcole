@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon profil – EntaideÉtu</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style-auth.css">
+</head>
+<body>
+
+<div class="panel-right" style="min-height:100vh">
+  <a href="index.html" class="back-link">← Retour à l'accueil</a>
+
+  <div class="form-wrap">
+    <h2 class="form-title">Mon <em>profil</em> 🌺</h2>
+    <p class="form-sub" id="email"></p>
+
+    <div class="success-box" id="ok"><span>✅</span><p>Profil mis à jour.</p></div>
+    <div class="alert-box" id="err"><span>⚠️</span><p id="err-msg"></p></div>
+
+    <div class="field-group">
+      <div class="field">
+        <label for="prenom">Prénom</label>
+        <div class="field-input-wrap">
+          <span class="field-icon">👤</span>
+          <input type="text" id="prenom" maxlength="50">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="nom">Nom</label>
+        <div class="field-input-wrap">
+          <span class="field-icon">👤</span>
+          <input type="text" id="nom" maxlength="50">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="commune">Commune</label>
+        <div class="field-input-wrap">
+          <span class="field-icon">📍</span>
+          <select id="commune">
+            <option>Nouméa</option>
+            <option>Dumbéa</option>
+            <option>Paita</option>
+            <option>Mont-Dore</option>
+            <option>Koné</option>
+            <option>Autre</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-submit" onclick="enregistrer()"><span class="btn-label">Enregistrer</span></button>
+      <button class="btn-submit" style="background:var(--coral)" onclick="deconnexion()"><span class="btn-label">Se déconnecter</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+// 1. Pré-remplir le formulaire avec l'utilisateur connecté (api/me.php)
+fetch('../api/me.php')
+  .then(r => r.ok ? r.json() : null)
+  .then(data => {
+    if (!data) { window.location.href = 'auth.html'; return; } // pas connecté
+    const u = data.user;
+    document.getElementById('email').textContent = u.email;
+    document.getElementById('prenom').value = u.prenom;
+    document.getElementById('nom').value = u.nom;
+    document.getElementById('commune').value = u.commune || 'Autre';
+  });
+
+// 2. Envoyer les modifications à api/profil.php
+function enregistrer() {
+  document.getElementById('ok').classList.remove('show');
+  document.getElementById('err').classList.remove('show');
+
+  fetch('../api/profil.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      prenom:  document.getElementById('prenom').value.trim(),
+      nom:     document.getElementById('nom').value.trim(),
+      commune: document.getElementById('commune').value
+    })
+  })
+    .then(r => r.json().then(data => ({ ok: r.ok, data })))
+    .then(({ ok, data }) => {
+      if (!ok) {
+        document.getElementById('err-msg').textContent = data.error;
+        document.getElementById('err').classList.add('show');
+        return;
+      }
+      document.getElementById('ok').classList.add('show');
+    });
+}
+
+// 3. Déconnexion
+function deconnexion() {
+  fetch('../api/logout.php').then(() => window.location.href = 'index.html');
+}
+</script>
+</body>
+</html>

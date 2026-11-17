@@ -12,10 +12,14 @@
 
 <!-- NAV -->
 <div id="navbar-include"></div>
+<script src="../assets/js/session.js"></script>
 <script>
 fetch('../navbar/navbar/navbar-index.html')
   .then(r => r.text())
-  .then(html => { document.getElementById('navbar-include').innerHTML = html; });
+  .then(html => {
+    document.getElementById('navbar-include').innerHTML = html;
+    afficherUtilisateur();
+  });
 </script>
 
 <!-- HERO -->
@@ -289,26 +293,47 @@ function timeAgo(ts) {
   return Math.floor(d/j)+'j';
 }
 
-/* ───────── THREADS DATA ───────── */
-let threads = [
-  { id:1, name:'Manaia T.', title:'Green Valley vs Pilotes du Caillou à Paita ?', body:'Salut tout le monde ! J\'hésite entre ces deux écoles, les deux ont des super avis. Est-ce que quelqu\'un a fait sa formation dans les deux et peut comparer ? Je cherche surtout quelqu\'un de patient pour les manœuvres 😅', cat:'avis', ts:Date.now()-7200000, replies:[
-    { name:'Kevin M.', text:'J\'ai fait ma formation à Green Valley, franchement top. Bruno est super patient, j\'ai eu mon permis du premier coup. Tarifs un peu élevés mais ça vaut le coup.', ts:Date.now()-5400000 },
-    { name:'Chloé P.', text:'Les Pilotes du Caillou à Paita c\'est vraiment bien aussi, Virginie est une instructrice en or ! Et le secrétariat est très réactif.', ts:Date.now()-3600000 },
-  ]},
-  { id:2, name:'Théo B.', title:'Combien d\'heures de conduite en moyenne avant l\'exam ?', body:'J\'ai passé le code il y a 2 semaines, je commence la conduite bientôt. Vous avez fait combien d\'heures avant de vous présenter à l\'examen ? Et c\'est quoi les manœuvres obligatoires en NC ?', cat:'permis', ts:Date.now()-18000000, replies:[
-    { name:'Aiyana K.', text:'Moi j\'en ai fait 25h, c\'est le forfait de base dans mon école. Mais mon instructeur m\'a dit que certains ont besoin de 30-35h. Ça dépend vraiment de toi !', ts:Date.now()-14400000 },
-  ]},
-  { id:3, name:'Sina V.', title:'Astuces pour réviser le code efficacement ?', body:'Je galère sur les panneaux de signalisation et les priorités. Vous utilisez quoi comme appli ou site pour réviser ? Il y a des questions spécifiques Nouvelle-Calédonie ou c\'est le même code qu\'en métropole ?', cat:'astuces', ts:Date.now()-86400000, replies:[
-    { name:'Tom D.', text:'Le code est quasiment identique à la métropole. J\'utilisais l\'appli "En Voiture Simone" et je révisais 20min par jour. En 3 semaines j\'étais prêt.', ts:Date.now()-72000000 },
-    { name:'Leila O.', text:'Pacifikonduite a des ordinateurs sur place pour réviser, et leur moniteur fait des sessions de code en groupe le samedi matin. Super utile !', ts:Date.now()-50000000 },
-  ]},
-  { id:4, name:'Raina P.', title:'Bonne ambiance dans vos autos-écoles ? 🌺', body:'Je cherche une école sympa où l\'ambiance est détendue, pas juste axée sur le fric. Quelqu\'un a une expérience positive à partager ? Je suis à Dumbéa.', cat:'vie', ts:Date.now()-172800000, replies:[] },
-  { id:5, name:'Jordan K.', title:'Tips pour pas rater son examen au premier essai 🚗', body:'Mon examen est dans 3 semaines. Des astuces de dernière minute ? Est-ce qu\'il vaut mieux faire une leçon de conduite la veille ou se reposer ?', cat:'astuces', ts:Date.now()-259200000, replies:[
-    { name:'Noni H.', text:'Dors bien la veille, c\'est le plus important. Fais une leçon 2-3 jours avant pour te rassurer mais pas la veille pour ne pas être stressé.', ts:Date.now()-240000000 },
-  ]},
-];
+/* ───────── THREADS DATA (chargés depuis la BD via api/sujets.php) ───────── */
+let threads = [];
 let currentFilter = 'tous';
 let openThreadId = null;
+
+function chargerSujets() {
+  return fetch('../api/sujets.php')
+    .then(r => r.json())
+    .then(data => {
+      threads = data;
+      renderThreads();
+      // si une discussion est ouverte, on rafraîchit aussi ses réponses
+      if (openThreadId !== null) {
+        const t = threads.find(x => x.id === openThreadId);
+        if (t) renderReplies(t);
+      }
+    })
+    .catch(() => {
+      document.getElementById('thread-list').innerHTML =
+        '<p style="text-align:center;color:var(--soft);padding:2rem">Erreur de chargement du forum.</p>';
+    });
+}
+
+// Seul un étudiant connecté peut publier ou répondre
+function verifierConnexion() {
+  if (!utilisateurConnecte) {
+    alert('Connecte-toi pour participer au forum 😊');
+    window.location.href = 'auth.html';
+    return false;
+  }
+  return true;
+}
+
+// Envoie des données en JSON à un fichier PHP (méthode POST)
+function envoyerJSON(url, donnees) {
+  return fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(donnees)
+  }).then(r => r.json().then(data => ({ ok: r.ok, data })));
+}
 
 /* ───────── RENDER THREADS ───────── */
 function renderThreads() {
@@ -338,7 +363,6 @@ function renderThreads() {
         <span class="thread-author">par ${t.name} · ${timeAgo(t.ts)}</span>
         <div class="thread-stats">
           <span class="thread-stat">💬 ${t.replies.length}</span>
-          <span class="thread-stat">👁 ${Math.floor(Math.random()*80)+12}</span>
         </div>
       </div>`;
     div.onclick = () => openThread(t.id);
@@ -353,30 +377,33 @@ function filterForum(cat, btn) {
   renderThreads();
 }
 
-/* ───────── POST TOPIC ───────── */
+/* ───────── POST TOPIC → INSERT dans la table sujet ───────── */
 function postTopic() {
-  const name  = document.getElementById('compose-name').value.trim();
+  if (!verifierConnexion()) return;
   const title = document.getElementById('compose-title').value.trim();
   const body  = document.getElementById('compose-body').value.trim();
   const cat   = document.getElementById('compose-cat').value;
-  if (!name || !title || !body) { alert('Remplis tous les champs 😊'); return; }
-  threads.push({ id: Date.now(), name, title, body, cat, ts: Date.now(), replies: [] });
-  document.getElementById('compose-name').value = '';
-  document.getElementById('compose-title').value = '';
-  document.getElementById('compose-body').value = '';
-  currentFilter = 'tous';
-  document.querySelectorAll('.forum-tab').forEach((t,i) => t.classList.toggle('active', i===0));
-  renderThreads();
+  if (!title || !body) { alert('Remplis le titre et le message 😊'); return; }
+
+  envoyerJSON('../api/sujets.php', { titre: title, message: body, categorie: cat })
+    .then(({ ok, data }) => {
+      if (!ok) { alert(data.error || 'Erreur lors de la publication.'); return; }
+      document.getElementById('compose-title').value = '';
+      document.getElementById('compose-body').value = '';
+      currentFilter = 'tous';
+      document.querySelectorAll('.forum-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+      chargerSujets();
+    });
 }
 
-// Live avatar preview
+// Live avatar preview + chargement initial
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('compose-name').addEventListener('input', function() {
     const av = document.getElementById('compose-av');
     av.textContent = initials(this.value) || '?';
     av.style.background = this.value ? avColor(this.value) : 'linear-gradient(135deg, var(--lagoon), var(--ocean))';
   });
-  renderThreads();
+  chargerSujets();
   renderTrajets();
 });
 
@@ -385,8 +412,8 @@ function openThread(id) {
   openThreadId = id;
   const t = threads.find(x => x.id === id);
   if (!t) return;
-  document.getElementById('thread-modal-title').textContent = t.title;
-  document.getElementById('thread-modal-body').textContent = t.body;
+  document.getElementById('thread-modal-title').innerHTML = t.title;
+  document.getElementById('thread-modal-body').innerHTML = t.body;
   renderReplies(t);
   document.getElementById('thread-modal').classList.add('open');
   document.getElementById('reply-input').value = '';
@@ -408,15 +435,19 @@ function renderReplies(t) {
       <p class="reply-text">${r.text}</p>
     </div>`).join('');
 }
+
+/* ───────── ADD REPLY → INSERT dans la table reponse ───────── */
 function addReply() {
-  const t = threads.find(x => x.id === openThreadId);
+  if (!verifierConnexion()) return;
   const text = document.getElementById('reply-input').value.trim();
-  if (!t || !text) return;
-  const name = prompt('Ton prénom ou pseudo ?', '') || 'Anonyme';
-  t.replies.push({ name, text, ts: Date.now() });
-  renderReplies(t);
-  renderThreads();
-  document.getElementById('reply-input').value = '';
+  if (openThreadId === null || !text) return;
+
+  envoyerJSON('../api/reponses.php', { id_sujet: openThreadId, message: text })
+    .then(({ ok, data }) => {
+      if (!ok) { alert(data.error || 'Erreur lors de l\'envoi de la réponse.'); return; }
+      document.getElementById('reply-input').value = '';
+      chargerSujets();
+    });
 }
 
 /* ───────── TRAJETS ───────── */

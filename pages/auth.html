@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="../assets/css/style-auth.css">
 
 
-</style>
 </head>
 <body>
 
@@ -253,6 +252,177 @@
     </div>
   </div>
 </div>
+<script>
+/* ══════════ CONFIG : les fichiers PHP sont dans le dossier api ══════════ */
+const API = '../api';
+let selectedCommune = '';
 
+/* ─── Copie de l'utilisateur côté navigateur (la vraie session est en PHP) ─── */
+const Session = {
+  set(token, user) {
+    sessionStorage.setItem('eetu_token', token);
+    sessionStorage.setItem('eetu_user', JSON.stringify(user));
+  },
+  getUser() {
+    try { return JSON.parse(sessionStorage.getItem('eetu_user') || 'null'); }
+    catch(e) { return null; }
+  },
+  clear() {
+    sessionStorage.removeItem('eetu_token');
+    sessionStorage.removeItem('eetu_user');
+  },
+};
+
+/* ─── Appel d'un fichier PHP en JSON ─── */
+async function apiCall(method, path, body = null) {
+  try {
+    const res = await fetch(`${API}${path}`, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    const data = await res.json();
+    return { ok: res.ok, status: res.status, data };
+  } catch (err) {
+    return { ok: false, status: 0, data: { error: 'Serveur injoignable. Vérifie que XAMPP est lancé.' } };
+  }
+}
+
+/* ─── Onglets connexion / inscription ─── */
+function showPanel(which) {
+  document.getElementById('panel-login').classList.toggle('active', which === 'login');
+  document.getElementById('panel-register').classList.toggle('active', which === 'register');
+  document.getElementById('btn-login').classList.toggle('active', which === 'login');
+  document.getElementById('btn-register').classList.toggle('active', which === 'register');
+  clearErrors();
+}
+
+/* ─── Helpers UI ─── */
+function setErr(id, show) { const el = document.getElementById(id); if (el) el.classList.toggle('show', show); }
+function setInputErr(id, show) { const el = document.getElementById(id); if (el) el.classList.toggle('error', show); }
+function clearErrors() {
+  document.querySelectorAll('.field-error').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('input').forEach(e => e.classList.remove('error'));
+  document.querySelectorAll('.alert-box,.success-box').forEach(e => e.classList.remove('show'));
+}
+function showAlert(id, msgId, msg) {
+  if (msgId) document.getElementById(msgId).textContent = msg;
+  document.getElementById(id).classList.add('show');
+}
+function togglePw(id, btn) {
+  const inp = document.getElementById(id);
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁'; }
+}
+function selectCommune(btn, name) {
+  document.querySelectorAll('.commune-badge').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedCommune = name;
+  setErr('reg-commune-err', false);
+}
+function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+/* ─── Force du mot de passe ─── */
+function checkStrength(val) {
+  const fill = document.getElementById('strength-fill');
+  const label = document.getElementById('strength-label');
+  label.style.display = val ? 'block' : 'none';
+  let score = 0;
+  if (val.length >= 8) score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+  const configs = [
+    { w:'20%',  bg:'#e74c3c', text:'😬 Trop faible' },
+    { w:'45%',  bg:'#e67e22', text:'🤔 Faible' },
+    { w:'70%',  bg:'#f9c846', text:'👍 Correct' },
+    { w:'100%', bg:'#27ae60', text:'💪 Excellent !' },
+  ];
+  const c = configs[Math.min(score, 3)];
+  if (val) { fill.style.width = c.w; fill.style.background = c.bg; label.textContent = c.text; label.style.color = c.bg; }
+  else { fill.style.width = '0%'; label.textContent = ''; }
+}
+
+/* ══════════ CONNEXION → api/login.php ══════════ */
+async function handleLogin() {
+  clearErrors();
+  const email = document.getElementById('login-email').value.trim();
+  const pw = document.getElementById('login-pw').value;
+  let valid = true;
+  if (!isValidEmail(email)) { setErr('login-email-err', true); setInputErr('login-email', true); valid = false; }
+  if (!pw) { setErr('login-pw-err', true); setInputErr('login-pw', true); valid = false; }
+  if (!valid) return;
+
+  const btn = document.getElementById('btn-login-submit');
+  btn.classList.add('loading');
+  const { ok, data } = await apiCall('POST', '/login.php', { email, password: pw });
+  btn.classList.remove('loading');
+
+  if (!ok) {
+    showAlert('login-alert', 'login-alert-msg', data.error || 'Email ou mot de passe incorrect.');
+    setInputErr('login-email', true);
+    setInputErr('login-pw', true);
+    return;
+  }
+  Session.set(data.token, data.user);
+  document.getElementById('login-success').classList.add('show');
+  setTimeout(() => { window.location.href = 'index.html'; }, 1400);
+}
+
+/* ══════════ INSCRIPTION → api/inscription.php ══════════ */
+async function handleRegister() {
+  clearErrors();
+  const prenom = document.getElementById('reg-prenom').value.trim();
+  const nom = document.getElementById('reg-nom').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pw = document.getElementById('reg-pw').value;
+  const pw2 = document.getElementById('reg-pw2').value;
+  const cgu = document.getElementById('reg-cgu').checked;
+  let valid = true;
+
+  if (!prenom) { setErr('reg-prenom-err', true); setInputErr('reg-prenom', true); valid = false; }
+  if (!nom) { setErr('reg-nom-err', true); setInputErr('reg-nom', true); valid = false; }
+  if (!isValidEmail(email)) { setErr('reg-email-err', true); setInputErr('reg-email', true); valid = false; }
+  if (!selectedCommune) { setErr('reg-commune-err', true); valid = false; }
+  if (pw.length < 8) { setErr('reg-pw-err', true); setInputErr('reg-pw', true); valid = false; }
+  if (pw !== pw2) { setErr('reg-pw2-err', true); setInputErr('reg-pw2', true); valid = false; }
+  if (!cgu) { setErr('reg-cgu-err', true); valid = false; }
+  if (!valid) return;
+
+  const btn = document.getElementById('btn-reg-submit');
+  btn.classList.add('loading');
+  const { ok, status, data } = await apiCall('POST', '/inscription.php', {
+    prenom, nom, email, commune: selectedCommune, password: pw,
+  });
+  btn.classList.remove('loading');
+
+  if (!ok) {
+    if (status === 422 && data.errors) showAlert('reg-alert', 'reg-alert-msg', data.errors[0]);
+    else if (status === 409) { showAlert('reg-alert', 'reg-alert-msg', 'Cet email est déjà associé à un compte.'); setInputErr('reg-email', true); }
+    else showAlert('reg-alert', 'reg-alert-msg', data.error || 'Erreur serveur.');
+    return;
+  }
+
+  Session.set(data.token, data.user);
+  document.getElementById('success-av').textContent = ((prenom[0] || '') + (nom[0] || '')).toUpperCase();
+  document.getElementById('success-name').textContent = prenom;
+  document.getElementById('success-commune').textContent = selectedCommune;
+  document.getElementById('register-form-view').style.display = 'none';
+  document.getElementById('reg-success-screen').classList.add('show');
+}
+
+/* ─── Mot de passe oublié (simulation, pas d'envoi d'email) ─── */
+function showForgot() { document.getElementById('forgot-overlay').style.display = 'flex'; }
+function closeForgot() {
+  document.getElementById('forgot-overlay').style.display = 'none';
+  document.getElementById('forgot-email').value = '';
+}
+function sendForgot() {
+  const email = document.getElementById('forgot-email').value.trim();
+  if (!isValidEmail(email)) { alert('Saisis une adresse email valide.'); return; }
+  closeForgot();
+  alert(`✅ Si un compte existe pour "${email}", un lien de réinitialisation lui sera envoyé.`);
+}
+</script>
 </body>
 </html>

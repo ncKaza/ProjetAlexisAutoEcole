@@ -12,10 +12,14 @@
 
 <!-- NAV -->
 <div id="navbar-include"></div>
+<script src="../assets/js/session.js"></script>
 <script>
 fetch('../navbar/navbar/navbar-autoecoles.html')
   .then(r => r.text())
-  .then(html => { document.getElementById('navbar-include').innerHTML = html; });
+  .then(html => {
+    document.getElementById('navbar-include').innerHTML = html;
+    afficherUtilisateur();
+  });
 </script>
 
 <!-- HERO -->
